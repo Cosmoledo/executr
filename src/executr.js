@@ -1,24 +1,23 @@
 (() => {
 	class Editor {
 		constructor(element, options) {
-			this.element = $(element);
 			this.options = options;
 
-			this.buildEditor();
+			this.buildEditor($(element));
 			this.addRunButton();
 		}
 
-		buildEditor() {
+		buildEditor(element) {
 			this.editorCont = $("<div>");
 			this.editorCont.addClass("executr-code-editor");
-			this.editorCont.css({
-				height: this.element.height() + 10 + "px",
-				width: this.element.width() + "px"
-			});
-			this.editorCont.insertBefore(this.element);
-			this.element.detach();
+			this.editorCont.insertBefore(element);
+			element.remove();
 
-			this.editor = CodeMirror(this.editorCont.get(0), this.options.codeMirrorOptions);
+			this.cm = CodeMirror(this.editorCont.get(0), this.options.codeMirrorOptions);
+
+			this.editorCont.css({
+				height: $(this.cm.display.gutters).height() - 13 + "px",
+			});
 		}
 
 		addRunButton() {
@@ -30,7 +29,7 @@
 		};
 
 		execute() {
-			const code = this.editor.getValue();
+			const code = this.cm.getValue();
 			if (this.options.beforeRun)
 				this.options.beforeRun(this.options);
 			const output = eval(code);
@@ -56,12 +55,13 @@
 		if ($.fn.is(options.codeSelector))
 			options.codeSelector = null;
 
-		let codeSelectors = $(options.codeSelector);
-		codeSelectors.each((index, element) => {
+		let editors = [];
+
+		$(options.codeSelector).each((index, element) => {
 			options.codeMirrorOptions.value = element.value || element.innerHTML || options.codeMirrorOptions.value
-			element.executr = new Editor(element, options);
+			editors.push(new Editor(element, options));
 		});
 
-		return codeSelectors;
+		return editors;
 	};
 })();

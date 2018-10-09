@@ -40,7 +40,7 @@ let element = window.executr({
 });
 ````
 
-`element` will now be the jQuery element of `codeSelector`. It will have a new attribute called `executr`, this holds the CodeMirror object, the starting options and some jquery elements.
+`element` is an array, where each holds the CodeMirror object, the starting options and two jquery elements.
 
 ### Other Options
 `window.executr` can be passed the following options
