@@ -1,18 +1,18 @@
 .executr-code-editor {
-	overflow: hidden;
 	position: relative;
 }
 
 .executr-code-editor .executr-run-button {
 	position: absolute;
-	right: 0;
+	right: 15px;
 	bottom: 0;
 	top: 0;
 	background-color: #DDD;
-	border: none;
+	border: 0;
 	font-size: 24px;
 	opacity: 0.5;
 	width: 84px;
+	z-index: 5;
 }
 
 .executr-code-editor .executr-run-button:hover {
