@@ -17,8 +17,8 @@ So I wrote my own executr. I also removed the CoffeeScript stuff, because I didn
 <script type="text/javascript" src="lib/CodeMirror/mode/javascript/javascript.js"></script>
 
 <!-- Add this library -->
-<script type="text/javascript" src="build/executr.js"></script>
-<link rel="stylesheet" type="text/css" href="build/executr.css">
+<script type="text/javascript" src="build/executr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="build/executr.min.css">
 ````
 
 ### Usage
