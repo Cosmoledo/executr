@@ -1,6 +1,8 @@
 ## executr
 At first, I am german and I use double quotes instead of single ones in JS. Don't blame me.
 
+This is a fork from https://github.com/HubSpot/executr
+
 ### Why this branch
 The master branch is nice but I missed the option to change the CodeMirror object. I wanted to give him a special KeyListener but I couldn't reach it.
 So I wrote my own executr. I also removed the CoffeeScript stuff, because I didn't need it.
