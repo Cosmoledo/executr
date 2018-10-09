@@ -40,7 +40,7 @@ let element = window.executr({
 });
 ````
 
-`element` is an array, where each holds the CodeMirror object, the starting options and two jquery elements.
+`element` is an array, where each element holds the CodeMirror object, the starting options and two jquery elements.
 
 ### Other Options
 `window.executr` can be passed the following options
