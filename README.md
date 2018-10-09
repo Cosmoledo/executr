@@ -50,8 +50,8 @@ let element = window.executr({
     outputTo:     ""                # jQuery selector for the result, no output in this case
     appendOutput: true              # Whether output should replace the contents of outputTo or append to it
     codeMirrorOptions: {}           # Extra options for CodeMirror
-    beforeRun:    ->                # Code to run before run-button executes editors-code
-    afterRun:     ->                # Code to run after run-button executed editors-code
+    beforeRun:    ->                # Function to run before run-button executes editors-code
+    afterRun:     ->                # Function to run after run-button executed editors-code
 }
 ````
 
