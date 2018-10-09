@@ -1,93 +1,86 @@
 ## executr
+At first, I am german and I use double quotes instead of single ones in JS. Don't blame me.
 
-Let your users execute and play with the CoffeeScript and JavaScript in your documentation
+### Why this branch
+The master branch is nice but I missed the option to change the CodeMirror object. I wanted to give him a special KeyListener but I couldn't reach it.
+So I wrote my own executr. I also removed the CoffeeScript stuff, because I didn't need it.
 
-### Example
-
-See our messenger documentation for an example: http://hubspot.github.com/messenger/
-
-### Including
-
+### Include the files
 ````html
 <!-- You should already have jQuery included -->
 
-<!-- Code Mirror is used to make the code blocks editable -->
+<!-- CodeMirror is used to make the code blocks editable -->
 <script type="text/javascript" src="lib/CodeMirror/codemirror.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/CodeMirror/codemirror.css">
 
-<!-- Include the CodeMirror languages you're going to use -->
-<script type="text/javascript" src="lib/CodeMirror/mode/coffeescript/coffeescript.js"></script>
-<script type="text/javascript" src="lib/coffee-script.js"></script>
+<!-- Include the CodeMirror language you're going to use -->
+<script type="text/javascript" src="lib/CodeMirror/mode/javascript/javascript.js"></script>
 
-<script type="text/javascript" src="build/js/executr.js"></script>
-
-<link rel="stylesheet" type="text/css" media="screen" href="lib/CodeMirror/codemirror.css">
-<link rel="stylesheet" type="text/css" media="screen" href="build/css/executr.css">
+<!-- Add this library -->
+<script type="text/javascript" src="build/executr.js"></script>
+<link rel="stylesheet" type="text/css" href="build/executr.css">
 ````
 
 ### Usage
+The element you wish to convert into an CodeMirror Editor can be any element, but I would use a `textarea`, that feels the most normal.
 
-The code blocks you wish to be executable should be wrapped in `<code executable></code>`.
+Then run `window.executr` and pass a selector for multiple code elements or a single element.
 
-Run `$.executr` on the container of multiple code elements, the body, or a single code block.
-
-The blocks will be converted into CodeMirror Editors, and a run button will be added.  If you're not interested
-in the code being editable, take a look at the v1.1 tag.
-
-Only the text (not tags) in the block will be executed, feel free to wrap your already-syntax-highlighted code.
-
-The code editor will assume the height + 10px and width of the code element.
+They will be converted into CodeMirror Editors and a run button will be added.
 
 ````html
-<pre><code executable>
-$ ->
-  alert "Testing!"
-</code></pre>
+<textarea id="toBeConverted">alert("example #1")</textarea>
 ````
 
 ````javascript
-$(function(){
-  $('body').executr();
+let element = window.executr({
+	"codeSelector": "#toBeConverted"
 });
 ````
 
-You can also make javascript executable, by either adding a `data-type="javascript"` attribute to the code
-block, or by adding `defaultType: 'javascript'` to the executr call.
-
-````html
-<code data-type="javascript" executable>
-alert("Testing!");
-</code>
-````
+`element` will now be the jQuery element of `codeSelector`. It will have a new attribute called `executr`, this holds the CodeMirror object, the starting options and some jquery elements.
 
 ### Other Options
-
-$.executr can be passed the following options
+`window.executr` can be passed the following options
 
 ````coffeescript
 {
-    codeSelector: 'code[executable]' # The jQuery selector items to be bound must match
-
-    outputTo: 'div.output' # An element which should receive the output.
-    appendOutput: true # Whether output should replace the contents of outputTo, or append to it
-
-    defaultType: 'coffeescript' # The default source languange, if not supplied as a data-type attribute
-    type: 'coffeescript' # The type to force on all code blocks, even if otherwise specified.  Can also be a function.
-    coffeeOptions: {} # Extra options for the CoffeeScript compiler
-
-    codeMirrorOptions: {} # Extra options for CodeMirror
-
-    setUp: -> # Code to run before each code block
-    tearDown: -> # Code to run after each code block
+    codeSelector: "#toBeConverted"  # jQuery selector
+    buttonText:   "Start !"         # Text for the button
+    outputTo:     ""                # jQuery selector for the result, no output in this case
+    appendOutput: true              # Whether output should replace the contents of outputTo or append to it
+    codeMirrorOptions: {}           # Extra options for CodeMirror
+    beforeRun:    ->                # Code to run before run-button executes editors-code
+    afterRun:     ->                # Code to run after run-button executed editors-code
 }
 ````
 
-#### Events
+#### Methods
 
-Executr will fire two events on the element it is bound to:
+`beforeRun`
+- `options` Shows the options you passed to `window.executr`
 
-- `executrBeforeExecute(code string, normalized code language, executr options)`
-- `executrAfterExecute(code output, code string, normalized code language, executr options)`
+`afterRun`
+- `options` Shows the options you passed to `window.executr`
+- `result` Shows the result of your code
 
-#### Contributing
-
-You can build the project by running `./build.sh`.  It requires the CoffeeScript compiler.
+### Example
+This shows an example from my current project.
+````html
+<textarea id="editor" rows="10" style="width: 100%;"></textarea>
+````
+````js
+let editor = window.executr({
+	codeSelector: "#editor",
+	buttonText: "Start",
+	codeMirrorOptions: {
+		lineNumbers: true,
+		mode: "javascript",
+		indentUnit: 4,
+		indentWithTabs: true,
+		autofocus: true,
+		theme: "monokai",
+		value: "console.log('test')"
+	}
+});
+````
