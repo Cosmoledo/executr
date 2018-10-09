@@ -62,7 +62,7 @@ let element = window.executr({
 
 `afterRun`
 - `options` Shows the options you passed to `window.executr`
-- `result` Shows the result of your code
+- `result`  Shows the result of your code
 
 ### Example
 This shows an example from my current project.
